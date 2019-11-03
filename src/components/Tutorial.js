@@ -1,13 +1,12 @@
 import React, {useState} from 'react';
 import {IoIosClose} from 'react-icons/io';
 
-
-const typeAlgorithms = '../../assets/typeAlgorithms.png';
-const mazeAlgorithms = '../../assets/typeMazeAlgorithm.png';
-const addCell = '../../assets/addCell.gif';
-const speedDropdown = '../../assets/speedDropdown.png';
-const compareAlgorithms = '../../assets/compareAlgorithms.png';
-const singleMaze = '../../assets/singleMaze.png';
+const typeAlgorithms = require('../assets/typeAlgorithms.png');
+const mazeAlgorithms = require('../assets/typeMazeAlgorithm.png');
+const addCell = require('../assets/addCell.gif');
+const speedDropdown = require('../assets/speedDropdown.png');
+const compareAlgorithms = require('../assets/compareAlgorithms.png');
+const singleMaze = require('../assets/singleMaze.png');
 
 const tutorial = props => {
 
