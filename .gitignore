@@ -20,3 +20,10 @@ jspm_packages/
 
 # Optional eslint cache
 .eslintcache
+
+.babelrc
+yarn.lock
+package-lock.json
+webpack.config.js
+
+
