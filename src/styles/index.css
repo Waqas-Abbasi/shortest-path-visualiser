@@ -1,0 +1,335 @@
+html {
+  overflow: hidden;
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  overflow: auto;
+  background-image: linear-gradient(to right, #36D1DC, #5B86E5);
+
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 15px;
+}
+
+.multiGridMain {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 15px;
+  margin-left: 40px;
+  margin-right: 40px;
+}
+
+.multiGrid {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.node {
+  display: table-cell;
+  height: 25px;
+  width: 25px;
+  background-color: white;
+  border-style: solid;
+  border-width: 0.02px;
+  border-color: #191783;
+}
+
+.nodeMultiGrid {
+  display: table-cell;
+  height: 22px;
+  width: 22px;
+  background-color: white;
+  border-style: solid;
+  border-width: 0.02px;
+  border-color: #191783;
+}
+
+.grid {
+  box-sizing: content-box;
+  -webkit-box-shadow: 0px 10px 35px 0px rgba(0,0,0,0.62);
+  -moz-box-shadow: 0px 10px 35px 0px rgba(0,0,0,0.62);
+  box-shadow: 0px 10px 35px 0px rgba(0,0,0,0.62);
+}
+
+.row {
+  display: table-row;
+}
+
+.buttons {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.button {
+  width: 100%;
+  margin-bottom: 20px;
+  height: 45px;
+  color: #000;
+  background-color: #fff;
+  border: none;
+  border-radius: 45px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none 0;
+}
+
+.button:hover {
+  background-color: #2EE59D;
+  box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+  color: #fff;
+  transform: translateY(-7px);
+}
+
+
+.node-start {
+  background-color: green;
+}
+
+.node-finish {
+  background-color: red;
+}
+
+.node-wall{
+  animation-name: wallAnimation;
+  animation-duration: 0.2s;
+  background-color: black;
+}
+
+@keyframes wallAnimation {
+  0% {
+    transform: scale(0.6);
+  }
+
+  40% {
+    transform: scale(1.2);
+  }
+
+
+  80% {
+    transform: scale(1.15);
+  }
+
+  100% {
+    transform: scale(1.0);
+  }
+}
+
+.node-visited {
+  background-color: blue;
+}
+
+.node-shortest-path {
+  background-color: yellow;
+}
+
+.errorBox{
+  height: 19px;
+  text-align: center;
+}
+
+
+.performanceContainer {
+  height: 25.5px;
+  text-align: center;
+}
+
+.sidebar {
+  background-color: rgba(255,255,255,0.3);
+  width: 20%;
+}
+
+.sidebarContainer {
+  margin-top: 10%;
+}
+
+.sidebarTitle {
+  margin-bottom: 10%;
+}
+
+
+button:focus {
+  outline: none !important;
+}
+
+.tutorialContainer {
+  position: absolute;
+  border-radius: 12px;
+  z-index: 5;
+  bottom: 0;
+  top: 0;
+  margin: auto;
+  right: 0;
+  left: 0;
+  height: 500px;
+  width: 500px;;
+  background-image: linear-gradient(to right, #36D1DC, #5B86E5);
+  -webkit-box-shadow: 10px 10px 61px -7px rgba(0,0,0,0.75);
+  -moz-box-shadow: 10px 10px 61px -7px rgba(0,0,0,0.75);
+  box-shadow: 10px 10px 61px -7px rgba(0,0,0,0.75);
+}
+
+.tutorialView {
+  position: absolute;
+  z-index: 4;
+  bottom: 0;
+  top: 0;
+  margin: auto;
+  right: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0,0,0,0.6);
+}
+
+.displayOff {
+  display: none;
+}
+
+.tutorialHeader {
+  text-align: center;
+  padding: 7px 5px 5px;
+  height: 10%;
+}
+
+.tutorialBody {
+  height: 75%;
+  padding: 0 10px 10px;
+}
+
+.tutorialFooter {
+  height: 15%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 5px;
+}
+
+.tutorialButton {
+  width: 120px;
+  height: 45px;
+  color: #000;
+  background-color: #fff;
+  border: none;
+  border-radius: 12px;
+  transition: all 0.3s ease 0s;
+  cursor: pointer;
+  outline: none 0;
+  -webkit-box-shadow: 10px 10px 43px -16px rgba(0,0,0,0.75);
+  -moz-box-shadow: 10px 10px 43px -16px rgba(0,0,0,0.75);
+  box-shadow: 10px 10px 43px -16px rgba(0,0,0,0.75);
+}
+
+.tutorialButton:hover {
+  background-color: #2EE59D;
+  -webkit-box-shadow: 10px 10px 12px -6px rgba(0,0,0,0.75);
+  -moz-box-shadow: 10px 10px 12px -6px rgba(0,0,0,0.75);
+  box-shadow: 10px 10px 12px -6px rgba(0,0,0,0.75);
+}
+
+.floatRight {
+  margin-left: 10px;
+}
+
+.closeMarker {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.closeMarker:hover{
+  cursor: pointer;
+}
+
+
+.copyArrows {
+  padding-top: 110px;
+}
+
+
+.metrics {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.keyMap {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.startSquare {
+  display: flex;
+  flex-direction: row;
+  padding-left: 5px;
+}
+
+.endSquare {
+  display: flex;
+  flex-direction: row;
+  padding-left: 5px;
+}
+
+.startSquareImg {
+  height: 25px;
+  width: 25px;
+  background-color: green;
+  margin-right: 5px;
+}
+
+.endSquareImg {
+  height: 25px;
+  width: 25px;
+  background-color: red;
+  margin-right: 5px;
+}
+
+
+
+.shortestPath {
+  display: flex;
+  flex-direction: row;
+  padding-left: 5px;
+}
+
+.shortestPathImg {
+  height: 25px;
+  width: 25px;
+  background-color: yellow;
+  margin-right: 5px;
+}
+
+.visitedSquare {
+  display: flex;
+  flex-direction: row;
+  padding-left: 5px;
+}
+
+.visitedSquareImg {
+  height: 25px;
+  width: 25px;
+  background-color: blue;
+  margin-right: 5px;
+}
+
+.wallSquare {
+  display: flex;
+  flex-direction: row;
+  padding-left: 5px;
+}
+
+.wallSquareImg {
+  height: 25px;
+  width: 25px;
+  background-color: black;
+  margin-right: 5px;
+}
