@@ -49,7 +49,7 @@ This visualiser allows you to visualise common path finding algorithms to find t
                   the neighbours of every visited node that have not yet been visited are kept track of. The algorithm
                   chooses one of these neighbours to visit next, randomly. Once a neighbour is chosen and visited, the neighbours
                   of the visited node are added to the neighbours list. This process happens continuously until no more unvisited
-                  nodes exist. Essentially, the maze extends in a random direction each iteration
+                  nodes exist. Essentially, the maze extends in a random direction each iteration.
 
 
 
