@@ -1,6 +1,6 @@
 # Shortest Path Visualiser
 
-This visualiser allows you to select various common shortest path algorithms and allows you to visualise how the algorithms find the shortest path to the end destination. This visualiser also supports maze generation algorithms. You can play around with this visualiser here: https://shortestpathvisualiser.netlify.com/
+This visualiser allows you to visualise common path finding algorithms to find the shortest path between a starting node and an end node. This visualiser also supports maze generation algorithms. You can play around with this visualiser here: https://shortestpathvisualiser.netlify.com/
 
 ### Path Finding Algorithms
 
