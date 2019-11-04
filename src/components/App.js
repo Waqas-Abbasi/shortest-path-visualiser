@@ -4,8 +4,8 @@ import Sidebar from 'react-sidebar';
 import Select from 'react-select';
 import Grid from './Grid';
 import Tutorial from './Tutorial';
-import {FaArrowLeft, FaArrowRight} from 'react-icons/fa';
 
+//Node Types
 export const NodeType = {
     START_NODE: 'START_NODE',
     FINISH_NODE: 'FINISH_NODE',
@@ -48,6 +48,7 @@ class App extends React.Component {
 
     }
 
+    //Triggers visualise algorithm in grid component when visualise button is clicked
     visualiseAlgorithm = () => {
         this.setState({
             visualiseAlgorithm: true,
@@ -58,6 +59,7 @@ class App extends React.Component {
         });
     };
 
+    //Triggers generate maze in grid component when one of the maze dropdowns are clicked
     updateGrid = (val) => {
 
         this.setState({
@@ -69,12 +71,14 @@ class App extends React.Component {
         });
     };
 
-
+    //Updates selected algorithm
     updateAlgorithm = val => {
         this.setState({
             selectedAlgorithm: val,
         });
     };
+
+    //State change causes two grids to render
     compareAlgorithms = () => {
         this.clearBoard();
         setTimeout(() => {
@@ -85,12 +89,14 @@ class App extends React.Component {
 
     };
 
+    //State change to change display speed
     updateSpeed = (val) => {
         this.setState({
             displaySpeed: val,
         });
     };
 
+    //Triggers clear board function in grid components
     clearBoard = () => {
         this.setState({
             clearBoard: true,
@@ -101,6 +107,7 @@ class App extends React.Component {
         });
     };
 
+    //Triggers clear walls function in grid components
     clearWalls = () => {
         this.setState({
             clearWalls: true,
@@ -111,6 +118,7 @@ class App extends React.Component {
         });
     };
 
+    //Sidebar render function
     sidebarContent = () => {
         const options = [
             {value: Algorithms.BFS, label: 'Breadth First Search'},
@@ -121,6 +129,7 @@ class App extends React.Component {
         ];
 
         const speedOptions = [
+            {value: 10, label: 'Very Slow'},
             {value: 3, label: 'Slow'},
             {value: 1.5, label: 'Medium'},
             {value: 1, label: 'Fast'},
@@ -215,6 +224,7 @@ class App extends React.Component {
     };
 
 
+    //Toggles Tutorial modal
     toggleTutorial = () => {
         this.setState(prevState => ({
             showTutorial: !prevState.showTutorial

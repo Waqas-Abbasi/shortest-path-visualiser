@@ -5,10 +5,16 @@ const ellersAlgorithm = (grid, visitedNodesInOrder) => {
     const n = grid.length;
     const m = grid[0].length;
 
+    //Map: Adjacency list, which stores elements (index positions) based on their set
     const setMap = {};
+
+    //Variable to increment every time a new set is created
     let setNumber = 0;
+
+    //List to keep keep track of elements and to which set they belong
     const setList = new Array(n).fill(null).map(() => new Array(m).fill(null));
 
+    //Iterate over every even row, this is important for mazes in 2D array data structure since otherwise, the maze is not complete
     for (let i = 0; i < n; i += 2) {
 
         //Initalise and assign each cell to a set if they don't already have one
@@ -34,6 +40,7 @@ const ellersAlgorithm = (grid, visitedNodesInOrder) => {
         const randomJoinList = [];
 
         for (let j = 0; j < adjacentCellsJoin; j++) {
+            //Random Index to join, index must have not previously been used to join and must belong to a different set.
             let randomJoinIndex = getRandomInt(0, m);
             if (randomJoinIndex % 2 !== 0) {
                 randomJoinIndex = Math.floor(randomJoinIndex / 2);
@@ -199,9 +206,11 @@ const ellersAlgorithm = (grid, visitedNodesInOrder) => {
         }
 
 
+        //Expand each set vertically once, usually you are expected to expand at least once, however just expanding once gives good results
         if (i + 2 < n) {
             for (let j = 0; j < setNumber; j++) {
                 if (setMap[j].length > 0) {
+                    //Choosing random element for each set to expand from
                     let randomVerticalIndex = getRandomInt(setMap[j][0].col, setMap[j][setMap[j].length - 1].col);
 
                     if (randomVerticalIndex % 2 !== 0) {
@@ -221,6 +230,7 @@ const ellersAlgorithm = (grid, visitedNodesInOrder) => {
 
                     }
 
+                    //Expand downwards
                     if (grid[i + 1][randomVerticalIndex].nodeType !== NodeType.START_NODE && grid[i + 1][randomVerticalIndex].nodeType !== NodeType.FINISH_NODE) {
                         setList[i + 1][randomVerticalIndex] = j;
                         grid[i + 1][randomVerticalIndex].nodeType = NodeType.EMPTY_NODE;
@@ -236,23 +246,25 @@ const ellersAlgorithm = (grid, visitedNodesInOrder) => {
                 }
             }
         }
+
+        //If on last Iteration, 33% chance to connect the bottom row cells,
+        // 33% chance to connect top row cells and 33% chance to connect half bottom and half top cells
         if (i === n - 1) {
-            if(Math.random() <= 0.33){
+            if (Math.random() <= 0.33) {
                 for (let j = 0; j < m; j++) {
                     if (grid[i][j].nodeType !== NodeType.START_NODE && grid[i][j].nodeType !== NodeType.FINISH_NODE) {
                         grid[i][j].nodeType = NodeType.EMPTY_NODE;
                         visitedNodesInOrder.push(grid[i][j]);
                     }
                 }
-            }
-            else if(Math.random() <= 0.66){
+            } else if (Math.random() <= 0.66) {
                 for (let j = 0; j < m; j++) {
                     if (grid[0][j].nodeType !== NodeType.START_NODE && grid[i][j].nodeType !== NodeType.FINISH_NODE) {
                         grid[0][j].nodeType = NodeType.EMPTY_NODE;
                         visitedNodesInOrder.push(grid[0][j]);
                     }
                 }
-            }else{
+            } else {
                 for (let j = 0; j < Math.floor(m / 2); j++) {
                     if (grid[i][j].nodeType !== NodeType.START_NODE && grid[i][j].nodeType !== NodeType.FINISH_NODE) {
                         grid[i][j].nodeType = NodeType.EMPTY_NODE;

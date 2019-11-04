@@ -7,7 +7,11 @@ const addCell = require('../assets/addCell.gif');
 const speedDropdown = require('../assets/speedDropdown.png');
 const compareAlgorithms = require('../assets/compareAlgorithms.png');
 const singleMaze = require('../assets/singleMaze.png');
+const startNodeMove = require('../assets/moveStartNode.gif');
 
+/*
+Tutorial component for Tutorial Modal
+ */
 const tutorial = props => {
 
     const [tutorialID, setTutorialID] = useState(0);
@@ -27,32 +31,7 @@ const tutorial = props => {
                 <img src={typeAlgorithms} style={{height: '200', width: '200px'}}/>
             </div>
             <br/>
-            <p>Press Next To Learn About These Algorithms!</p>
-        </div>)
-        , (<div>
-            <p><b>Breadth First Search: </b>Breadth First Search is an Algorithm for Unweighted Problems which explores
-                all the neighbours at a certain depth before moving on to the children of those neighbours. It uses a
-                Queue to keep track of the next nodes to visit.</p>
-            <p><b>Depth First Search: </b>Depth First Search is an Algorithm for Unweighted Problems which explores a
-                branch / path as far as possible before moving on to its neighbour. It uses a Stack to keep track of the
-                next nodes to visit.</p>
-            <p><b>Dijkstra's Algorithm: </b>Dijkstra's Algorithm is an Algorithm for Weighted Problems, Initially all
-                nodes have a distance of Infinity, but as nodes are explored, their cost is updated. The algorithm
-                prioritises nodes which are unvisited and have a lower cost to explore, next. In doing so, you find the
-                shortest path faster and more efficiently. Dijkstra's Algorithm uses a Priority Queue to keep track of
-                the
-                nodes to visit. A distance from 1 cell to another is 1.</p>
-        </div>)
-        , (<div>
-            <p><b>A* Search Algorithm: </b>A* Search Algorithm is an Algorithm for Weighted Problems. Unlike other
-                algorithms, this algorithm is aware of the position of the destination and so is able to calculate the
-                cost (distance to destination) for each cell. Similar to Dijkstra's Algorithm,
-                A* Search Algorithm uses a Priority Queue, but uses the distance to the destination node as the cost to
-                prioritise.</p>
-            <p><b>Random Search Algorithm: </b> This Algorithm is an Unweighted Algorithm. Each neighbour has a 50%
-                chance of being chosen to be visited. Additionally to prevent cases where no node is selected, one of
-                the 4 neighbours of a node is guaranteed to be chosen.</p>
-            <p>Press Next to Learn about Maze Generation!</p>
+            <p>Press Next To Learn About Maze Generation!</p>
         </div>)
         , (<div>
             <p>There's many different ways to make this Visualiser more Interesting.</p>
@@ -72,37 +51,10 @@ const tutorial = props => {
                 <img src={mazeAlgorithms} style={{height: '200', width: '200px'}}/>
             </div>
             <br/>
-            <p>Click Next To Learn The Maze Algorithms!</p>
+            <p>You can learn more about these algorithms on my <a style={{color: 'white'}} target="_blank"
+                                                                  href={'https://github.com/Waqas-Abbasi/shortestpathvisualiser'}>Github</a>
+            </p>
         </div>),
-        (<div>
-            <p><b>Recursive Division: </b>Recursive Division Algorithm is based on Fractal Nature. The Idea is to start
-                with a room and divide it into parts and then keep recursively dividing those parts until it can no
-                longer divide further.</p>
-            <p><b>Prim's Algorithm: </b>Prim's Algorithm is a Minimum Spanning Tree algorithm which if randomized can be
-                utilised for
-                maze generation. It starts at a random point on the maze and then grows outwards. At every given point,
-                the neighbours of every visited node that have not yet been visited are kept track of. The algorithm
-                chooses one
-                of these neighbours to visit next, randomly. Once a neighbour is chosen and visited, the neighbours
-                of the
-                visited node are added to the neighbours list. This process happens continuously until no more unvisited
-                nodes exist. Essentially, the maze extends in a random direction each iteration</p>
-        </div>),
-        (
-            <div>
-                <p><b>Ellers's Algorithm: </b>Eller's Algorithm is an Algorithm that works from a row to row basis.
-                    Essentially
-                    the nature of Set theory enables this algorithm to produce a complete maze. The Algorithm works on
-                    one row at a time. In each iteration, if a cell in the row does not belong to a set, it is assigned
-                    a set. After every cell in the row belongs to a set, based on the row size, random adjacent sets are
-                    conjoined. After random sets are joined with each other (The smaller set becomes part of the bigger
-                    set), at least one point of each set must extend downwards. Extending to cells without a set expands
-                    the growing set, after each set is extended downwards
-                    from at least one point, the iteration is complete and the process repeats.</p>
-                <br/>
-                <p>Press Next To Learn More!</p>
-            </div>
-        ),
         (<div>
             <p>You can also adjust the speed at which the algorithm or the maze generation is visualised. Doing so can
                 enable you to see how various algorithms work. Speed can be modified from the Speed Dropdown.</p>
@@ -124,10 +76,9 @@ const tutorial = props => {
                 a Path finding Algorithm from the sidebar then both Grids receive that chosen Algorithm.</p>
         </div>),
         (<div>
-            <p>You can choose to go back to the Single Larger Maze, by pressing the Single Maze Button. This button will
-                appear when you choose to compare algorithms.</p>
+            <p>You can also choose to move the Starting Position and/or the End Destination.</p>
             <div style={{width: '100%', display: 'flex', justifyContent: 'center', marginBottom: '5px'}}>
-                <img src={singleMaze} style={{height: '100px', width: '300px'}}/>
+                <img src={startNodeMove} style={{height: '170px', width: '300px'}}/>
             </div>
             <br/>
             <p>These are some of the Keys that might be helpful to know!</p>

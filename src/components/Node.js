@@ -2,6 +2,9 @@ import React from 'react';
 import {NodeType} from './App';
 
 
+/*
+Node Component, each cell in the grid component corresponds to a node component.
+ */
 class Node extends React.Component {
 
     constructor(props) {
@@ -10,6 +13,7 @@ class Node extends React.Component {
         this.nodeRef = React.createRef();
         this.props.updateRef(this.nodeRef, this.props.row, this.props.col);
     }
+
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
         if (this.props.nodeType === NodeType.START_NODE || this.props.nodeType === NodeType.FINISH_NODE) {
@@ -23,6 +27,7 @@ class Node extends React.Component {
         return true;
     }
 
+    //Renders node square based on the class property
     render() {
         const {
             col,

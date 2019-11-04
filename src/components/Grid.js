@@ -4,7 +4,7 @@ import bfs from '../algorithms/BreadthFirstSearch';
 import dfs from '../algorithms/DepthFirstSearch';
 import dijkstra from '../algorithms/DijkstrasAlgorithm';
 import aStar from '../algorithms/AStarAlgorithm';
-import randomAlgorithm from '../algorithms/RandomAlgorithm';
+import randomSearchAlgorithm from '../algorithms/RandomSearchAlgorithm';
 import Select from 'react-select';
 import recursiveDivsion from '../algorithms/maze/RecursiveDivision';
 import primsAlgorithm from '../algorithms/maze/PrimsAlgorithm';
@@ -33,6 +33,9 @@ const Maze = {
     ELLERS_ALGORITHM: 'ELLERS_ALGORITHM',
 };
 
+/*
+Grid Component responsible for displaying the grid
+ */
 class Grid extends React.Component {
 
     state = {
@@ -55,6 +58,7 @@ class Grid extends React.Component {
         gridActive: false,
     };
 
+    //To ensure when there is change in certain props, trigger certain functions
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.mazeAlgorithm !== this.props.mazeAlgorithm) {
             if (this.props.mazeAlgorithm) {
@@ -93,6 +97,7 @@ class Grid extends React.Component {
         }
     }
 
+    //Create grid before mounting
     componentWillMount() {
         const grid = [];
         for (let row = 0; row < this.state.gridHeight; row++) {
@@ -111,6 +116,7 @@ class Grid extends React.Component {
         this.setState({grid: [...grid], refNodes: grid.map(row => row.map(() => React.createRef()))});
     }
 
+    //Responsible for animating, recieves array of nodes visited. Animates nodes based on their index in the array
     animate(visitedNodesInOrder) {
         for (let i = 0; i < visitedNodesInOrder.length; i++) {
             if (i === visitedNodesInOrder.length - 1) {
@@ -141,15 +147,21 @@ class Grid extends React.Component {
 
     }
 
+    //Make a call to the path finding algorithm Function and visualising the result
     visualiseAlgorithm = () => {
         this.clearBoard();
         this.setState({
             error: '',
             gridActive: true,
         });
+
         let visitedNodesInOrder;
+        //Variables to keep track of Algorithm runtime.
         let v0, v1;
+
         const algorithm = this.state.selectedAlgorithm ? this.state.selectedAlgorithm : this.props.selectedAlgorithm;
+
+        //Switch statement to determine which Algorithm is selected
         switch (algorithm) {
             case Algorithms.BFS:
                 v0 = performance.now();
@@ -173,14 +185,17 @@ class Grid extends React.Component {
                 break;
             case Algorithms.RANDOM:
                 v0 = performance.now();
-                visitedNodesInOrder = randomAlgorithm(this.state.grid, this.state.startNode);
+                visitedNodesInOrder = randomSearchAlgorithm(this.state.grid, this.state.startNode);
                 v1 = performance.now();
                 break;
         }
+        //Update metric info
         this.setState({
             performance: v1 - v0,
             nodesVisited: visitedNodesInOrder.length,
         });
+
+        //If path is not found or starting node is obstructed then display error message
         if (visitedNodesInOrder.length == 0
             || (visitedNodesInOrder[visitedNodesInOrder.length - 1].row !== this.state.finishNode.row && visitedNodesInOrder[visitedNodesInOrder.length - 1].col !== this.state.finishNode.col)) {
             this.setState({
@@ -188,9 +203,12 @@ class Grid extends React.Component {
                 gridActive: false,
             });
         }
+
+        //Call animate array after calling the path finding algorithms
         this.animate(visitedNodesInOrder);
     };
 
+    //animates the shortest path by backtracing from final node with parent property
     animateShortestPath = (visitedNodesInOrder) => {
         visitedNodesInOrder = visitedNodesInOrder.reverse();
         let node = visitedNodesInOrder[0];
@@ -231,6 +249,7 @@ class Grid extends React.Component {
 
     };
 
+    //Generates maze based on selected maze algorithm, makes call to maze generation algorithms
     generateMaze = (val) => {
         this.clearBoard();
         this.clearWalls();
@@ -310,6 +329,7 @@ class Grid extends React.Component {
         this.setState({grid: [...grid]});
     };
 
+    //Helper function for rendering and animating maze generation algorithms which have an initial state covered with walls.
     animateMazeOrderReverse = (grid, mazeArray, counter) => {
         this.setState({
             gridActive: true,
@@ -335,6 +355,7 @@ class Grid extends React.Component {
         }
     };
 
+    //Helper function to display and animate the walls
     animateMazeOrder = (grid, mazeArray) => {
         this.setState({
             gridActive: true,
@@ -407,6 +428,9 @@ class Grid extends React.Component {
         });
     };
 
+    //Mouse events to detect if the mouse is pressed down and if so create a wall in that area.
+    //Mouse events to determine if the start/end node is being moved.
+
     onMouseLeave = (row, col) => {
         if (this.state.isItemBeingDragged) {
             if (this.state.nodeTypeDragged == NodeType.START_NODE) {
@@ -425,6 +449,7 @@ class Grid extends React.Component {
 
     onMouseEnter = (row, col) => {
         if (this.state.gridActive) return;
+
         if (this.state.isItemBeingDragged) {
             if (this.state.nodeTypeDragged == NodeType.START_NODE) {
                 this.state.refNodes[row][col].current.classList.add('node-start');
@@ -447,15 +472,15 @@ class Grid extends React.Component {
                 return;
             }
 
-            const nodeType = this.state.grid[row][col].nodeType;
-            this.setState({
-                grid: [...this.getNewGridWithWallToggled(this.state.grid, row, col)]
-            });
-            if (nodeType === NodeType.WALL_NODE) {
+            if (this.state.refNodes[row][col].current.classList.value.includes('node-wall')) {
                 this.state.refNodes[row][col].current.classList.remove('node-wall');
             } else {
                 this.state.refNodes[row][col].current.classList.value = this.props.multiGrid ? 'nodeMultiGrid node-wall' : 'node node-wall';
             }
+
+            this.setState({
+                grid: [...this.getNewGridWithWallToggled(this.state.grid, row, col)]
+            });
 
         }
     };
@@ -466,15 +491,15 @@ class Grid extends React.Component {
         if (nodeType == NodeType.START_NODE || nodeType == NodeType.FINISH_NODE) {
             return;
         } else {
-            const nodeType = this.state.grid[row][col].nodeType;
-            this.setState({
-                grid: [...this.getNewGridWithWallToggled(this.state.grid, row, col)]
-            });
-            if (nodeType === NodeType.WALL_NODE) {
+            if (this.state.refNodes[row][col].current.classList.value.includes('node-wall')) {
                 this.state.refNodes[row][col].current.classList.remove('node-wall');
             } else {
                 this.state.refNodes[row][col].current.classList.value = this.props.multiGrid ? 'nodeMultiGrid node-wall' : 'node node-wall';
             }
+
+            this.setState({
+                grid: [...this.getNewGridWithWallToggled(this.state.grid, row, col)]
+            });
         }
     };
 
@@ -524,6 +549,7 @@ class Grid extends React.Component {
         });
     };
 
+    //Updates local state after change in selected algorithm prop
     updateLocalAlgorithm = val => {
         this.setState({
             selectedAlgorithm: val,
@@ -548,7 +574,7 @@ class Grid extends React.Component {
                     selectedAlgorithm = 'A* Search Algorithm';
                     break;
                 case Algorithms.RANDOM:
-                    selectedAlgorithm = 'Random Algorithm';
+                    selectedAlgorithm = 'Random Search Algorithm';
             }
 
 
