@@ -24,7 +24,7 @@ This visualiser allows you to visualise common path finding algorithms to find t
 
 
 
-- **A* Search Algorithm**: A* Search Algorithm is an Algorithm for Weighted Problems. Unlike other
+- **A\* Search Algorithm**: A* Search Algorithm is an Algorithm for Weighted Problems. Unlike other
                   algorithms, this algorithm is aware of the position of the destination and so is able to calculate the
                   cost (distance to destination) for each cell. Similar to Dijkstra's Algorithm,  A* Search Algorithm uses a Priority Queue, but uses the distance from the starting position + the distance to the destination as the heuristic.
 
