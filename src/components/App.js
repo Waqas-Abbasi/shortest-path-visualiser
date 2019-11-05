@@ -44,6 +44,7 @@ class App extends React.Component {
             clearBoard: false,
             clearWalls: false,
             showTutorial: true,
+            gridActive: false,
         };
 
     }
@@ -206,8 +207,8 @@ class App extends React.Component {
                 />
                 <br/>
                 <div className={'buttons'}>
-                    <button type='button' onClick={() => this.visualiseAlgorithm()}
-                            className={'button'}>Visualise
+                    <button type='button' disabled={this.state.gridActive} onClick={() => this.visualiseAlgorithm()}
+                            className={this.state.gridActive ?  'disabled' : 'button'}>Visualise
                     </button>
                     <button type='button' onClick={this.clearWalls} className={'button'}>Clear Walls</button>
                     <button type='button' onClick={() => {
@@ -231,6 +232,11 @@ class App extends React.Component {
         }));
     };
 
+    toggleGrid = () => {
+        this.setState(prevState => ({
+            gridActive: !prevState.gridActive,
+        }));
+    };
 
     render() {
         return (
@@ -249,6 +255,7 @@ class App extends React.Component {
                             mazeAlgorithm={this.state.mazeAlgorithm}
                             clearBoard={this.state.clearBoard}
                             clearWalls={this.state.clearWalls}
+                            toggleGrid={this.toggleGrid}
                             displaySpeed={this.state.displaySpeed}
                             visualiseAlgorithm={this.state.visualiseAlgorithm}/> :
                         <div className={'multiGrid'}>
@@ -258,6 +265,7 @@ class App extends React.Component {
                                 mazeAlgorithm={this.state.mazeAlgorithm}
                                 displaySpeed={this.state.displaySpeed}
                                 clearBoard={this.state.clearBoard}
+                                toggleGrid={this.toggleGrid}
                                 clearWalls={this.state.clearWalls}
                                 visualiseAlgorithm={this.state.visualiseAlgorithm}/>
                             <Grid
@@ -266,6 +274,7 @@ class App extends React.Component {
                                 mazeAlgorithm={this.state.mazeAlgorithm}
                                 clearBoard={this.state.clearBoard}
                                 clearWalls={this.state.clearWalls}
+                                toggleGrid={this.toggleGrid}
                                 displaySpeed={this.state.displaySpeed}
                                 visualiseAlgorithm={this.state.visualiseAlgorithm}/>
                         </div>}

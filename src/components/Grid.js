@@ -66,6 +66,10 @@ class Grid extends React.Component {
             }
         }
 
+        if(prevState.gridActive !== this.state.gridActive){
+            this.props.toggleGrid();
+        }
+
         if (prevProps.selectedAlgorithm !== this.props.selectedAlgorithm) {
             this.setState({
                 selectedAlgorithm: '',
