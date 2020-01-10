@@ -346,3 +346,10 @@ button:focus {
   background-color: black;
   margin-right: 5px;
 }
+
+.githubLogo{
+  width: 32px;
+  height:32px;
+  margin: 20px;
+
+}

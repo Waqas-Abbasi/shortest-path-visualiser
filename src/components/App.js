@@ -4,6 +4,7 @@ import Sidebar from 'react-sidebar';
 import Select from 'react-select';
 import Grid from './Grid';
 import Tutorial from './Tutorial';
+import GithubLogo from '../assets/GitHub-Mark-120px-plus.png';
 
 //Node Types
 export const NodeType = {
@@ -220,6 +221,7 @@ class App extends React.Component {
                         {this.state.multiGrid ? 'Single Maze' : 'Compare Algorithms'}
                     </button>
                 </div>
+                <a href={'https://github.com/Waqas-Abbasi/shortest-path-visualiser'}><img className={'githubLogo'} src={GithubLogo} alt='Project Github Link'/></a>
             </div>
         );
     };

@@ -22,6 +22,4 @@ jspm_packages/
 .eslintcache
 
 package-lock.json
-webpack.config.js
-.babelrc
 yarn.lock

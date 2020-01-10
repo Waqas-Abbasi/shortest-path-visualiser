@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {IoIosClose} from 'react-icons/io';
 
 const typeAlgorithms = require('../assets/typeAlgorithms.png');
@@ -6,7 +6,6 @@ const mazeAlgorithms = require('../assets/typeMazeAlgorithm.png');
 const addCell = require('../assets/addCell.gif');
 const speedDropdown = require('../assets/speedDropdown.png');
 const compareAlgorithms = require('../assets/compareAlgorithms.png');
-const singleMaze = require('../assets/singleMaze.png');
 const startNodeMove = require('../assets/moveStartNode.gif');
 
 /*
@@ -14,7 +13,13 @@ Tutorial component for Tutorial Modal
  */
 const tutorial = props => {
 
+    const images = [typeAlgorithms, mazeAlgorithms, addCell, speedDropdown, compareAlgorithms, startNodeMove];
+    useEffect(() => {
+        images.forEach(image => {new Image().src = image});
+    }, []);
+
     const [tutorialID, setTutorialID] = useState(0);
+
     const [slides] = useState([
         (<div>
             <p>This Visualiser is designed to showcase how different Shortest Path Algorithms find the shortest paths to
@@ -161,7 +166,7 @@ const tutorial = props => {
                     <button type='button' onClick={() => slideChange(-1)}
                             className={'tutorialButton floatRight'}>Previous
                     </button>
-                    {tutorialID == slides.length - 1 ?
+                    {tutorialID === slides.length - 1 ?
                         <button type='button' onClick={skipTutorial} className={'tutorialButton floatRight'}>Finish
                         </button>
                         :
