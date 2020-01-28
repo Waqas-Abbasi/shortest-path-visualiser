@@ -20,7 +20,6 @@ const Algorithms = {
     DFS: 'Depth First Search',
     DIJKSTRA: 'Dijkstra\'s Algorithm',
     ASTAR: 'A* Search Algorithm',
-    RANDOM: 'Random Search Algorithm',
 };
 
 const Maze = {
@@ -38,7 +37,7 @@ class App extends React.Component {
 
         this.state = {
             multiGrid: false,
-            displaySpeed: 1,
+            displaySpeed: 0.5,
             mazeAlgorithm: null,
             visualiseAlgorithm: false,
             selectedAlgorithm: Algorithms.BFS,
@@ -127,15 +126,13 @@ class App extends React.Component {
             {value: Algorithms.DFS, label: 'Depth First Search'},
             {value: Algorithms.DIJKSTRA, label: 'Dijkstra\'s Algorithm'},
             {value: Algorithms.ASTAR, label: 'A* Search Algorithm'},
-            {value: Algorithms.RANDOM, label: 'Random Search Algorithm'},
         ];
 
         const speedOptions = [
-            {value: 10, label: 'Very Slow'},
-            {value: 3, label: 'Slow'},
+            {value: 5, label: 'Slow'},
             {value: 1.5, label: 'Medium'},
-            {value: 1, label: 'Fast'},
-            {value: 0.5, label: 'Very Fast'},
+            {value: 0.5, label: 'Fast'},
+            {value: 0, label: 'Realtime'}
         ];
 
         const options2 = [
@@ -280,11 +277,6 @@ class App extends React.Component {
                                 displaySpeed={this.state.displaySpeed}
                                 visualiseAlgorithm={this.state.visualiseAlgorithm}/>
                         </div>}
-                    <div>
-                        <p style={{textAlign: 'center'}}>Please keep in mind that the runtime of the visualisation
-                            does
-                            not reflect the runtime of the algorithm.</p>
-                    </div>
                 </Sidebar>
             </div>
 

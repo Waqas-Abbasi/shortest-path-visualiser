@@ -4,7 +4,6 @@ import bfs from '../algorithms/BreadthFirstSearch';
 import dfs from '../algorithms/DepthFirstSearch';
 import dijkstra from '../algorithms/DijkstrasAlgorithm';
 import aStar from '../algorithms/AStarAlgorithm';
-import randomSearchAlgorithm from '../algorithms/RandomSearchAlgorithm';
 import Select from 'react-select';
 import recursiveDivsion from '../algorithms/maze/RecursiveDivision';
 import primsAlgorithm from '../algorithms/maze/PrimsAlgorithm';
@@ -23,7 +22,6 @@ const Algorithms = {
     DFS: 'Depth First Search',
     DIJKSTRA: 'Dijkstra\'s Algorithm',
     ASTAR: 'A* Search Algorithm',
-    RANDOM: 'Random Search Algorithm',
 };
 
 const Maze = {
@@ -51,8 +49,7 @@ class Grid extends React.Component {
         isItemBeingDragged: false,
         nodeTypeDragged: '',
         displaySpeed: this.props.displaySpeed,
-        performance: 0,
-        nodesExplored: 0,
+        nodesVisited: 0,
         timeoutArr: [],
         wallList: [],
         gridActive: false,
@@ -160,47 +157,31 @@ class Grid extends React.Component {
         });
 
         let visitedNodesInOrder;
-        //Variables to keep track of Algorithm runtime.
-        let v0, v1;
 
         const algorithm = this.state.selectedAlgorithm ? this.state.selectedAlgorithm : this.props.selectedAlgorithm;
 
         //Switch statement to determine which Algorithm is selected
         switch (algorithm) {
             case Algorithms.BFS:
-                v0 = performance.now();
                 visitedNodesInOrder = bfs(this.state.grid, this.state.startNode);
-                v1 = performance.now();
                 break;
             case Algorithms.DFS :
-                v0 = performance.now();
                 visitedNodesInOrder = dfs(this.state.grid, this.state.startNode);
-                v1 = performance.now();
                 break;
             case Algorithms.DIJKSTRA:
-                v0 = performance.now();
                 visitedNodesInOrder = dijkstra(this.state.grid, this.state.startNode);
-                v1 = performance.now();
                 break;
             case Algorithms.ASTAR:
-                v0 = performance.now();
                 visitedNodesInOrder = aStar(this.state.grid, this.state.startNode, this.state.finishNode);
-                v1 = performance.now();
-                break;
-            case Algorithms.RANDOM:
-                v0 = performance.now();
-                visitedNodesInOrder = randomSearchAlgorithm(this.state.grid, this.state.startNode);
-                v1 = performance.now();
                 break;
         }
         //Update metric info
         this.setState({
-            performance: v1 - v0,
             nodesVisited: visitedNodesInOrder.length,
         });
 
         //If path is not found or starting node is obstructed then display error message
-        if (visitedNodesInOrder.length == 0
+        if (visitedNodesInOrder.length === 0
             || (visitedNodesInOrder[visitedNodesInOrder.length - 1].row !== this.state.finishNode.row && visitedNodesInOrder[visitedNodesInOrder.length - 1].col !== this.state.finishNode.col)) {
             this.setState({
                 error: 'No Path Found!',
@@ -239,7 +220,7 @@ class Grid extends React.Component {
                 node = shortestPathNodesInOrder[j];
                 this.state.refNodes[node.row][node.col].current.classList.add('node-shortest-path');
 
-                if (j == shortestPathNodesInOrder.length - 1) {
+                if (j === shortestPathNodesInOrder.length - 1) {
                     this.setState({
                         gridActive: false,
                     });
@@ -257,7 +238,7 @@ class Grid extends React.Component {
     generateMaze = (val) => {
         this.clearBoard();
         this.clearWalls();
-        let animateMazeArray = new Array();
+        let animateMazeArray = [];
 
         let grid, counter;
         grid = this.state.grid;
@@ -348,7 +329,7 @@ class Grid extends React.Component {
                 grid[row][col].nodeType = NodeType.EMPTY_NODE;
                 this.state.refNodes[row][col].current.classList.remove('node-wall');
 
-                if (i == mazeArray.length - 1) {
+                if (i === mazeArray.length - 1) {
                     this.setState({
                         gridActive: false,
                     });
@@ -374,7 +355,7 @@ class Grid extends React.Component {
                 grid[row][col].nodeType = NodeType.WALL_NODE;
                 this.state.refNodes[row][col].current.classList.add('node-wall');
 
-                if (i == mazeArray.length - 1) {
+                if (i === mazeArray.length - 1) {
                     this.setState(
                         {
                             gridActive: false,
@@ -390,6 +371,7 @@ class Grid extends React.Component {
         this.setState({
             error: '',
             gridActive: false,
+            nodesVisited: 0,
         });
         this.state.timeoutArr.forEach(timer => clearTimeout(timer));
         this.state.timeoutArr = [];
@@ -437,11 +419,11 @@ class Grid extends React.Component {
 
     onMouseLeave = (row, col) => {
         if (this.state.isItemBeingDragged) {
-            if (this.state.nodeTypeDragged == NodeType.START_NODE) {
+            if (this.state.nodeTypeDragged === NodeType.START_NODE) {
                 this.state.refNodes[row][col].current.classList.remove('node-start');
             }
 
-            if (this.state.nodeTypeDragged == NodeType.FINISH_NODE) {
+            if (this.state.nodeTypeDragged === NodeType.FINISH_NODE) {
                 this.state.refNodes[row][col].current.classList.remove('node-finish');
             }
 
@@ -455,14 +437,14 @@ class Grid extends React.Component {
         if (this.state.gridActive) return;
 
         if (this.state.isItemBeingDragged) {
-            if (this.state.nodeTypeDragged == NodeType.START_NODE) {
+            if (this.state.nodeTypeDragged === NodeType.START_NODE) {
                 this.state.refNodes[row][col].current.classList.add('node-start');
                 const grid = this.state.grid;
                 grid[row][col].nodeType = NodeType.START_NODE;
                 this.setState({grid: [...grid], startNode: {row, col}});
             }
 
-            if (this.state.nodeTypeDragged == NodeType.FINISH_NODE) {
+            if (this.state.nodeTypeDragged === NodeType.FINISH_NODE) {
                 this.state.refNodes[row][col].current.classList.add('node-finish');
                 const grid = this.state.grid;
                 grid[row][col].nodeType = NodeType.FINISH_NODE;
@@ -492,7 +474,7 @@ class Grid extends React.Component {
     onClick = (row, col, nodeType) => {
         if (this.state.gridActive) return;
 
-        if (nodeType == NodeType.START_NODE || nodeType == NodeType.FINISH_NODE) {
+        if (nodeType === NodeType.START_NODE || nodeType === NodeType.FINISH_NODE) {
             return;
         } else {
             if (this.state.refNodes[row][col].current.classList.value.includes('node-wall')) {
@@ -509,7 +491,7 @@ class Grid extends React.Component {
 
     onMouseDown = (nodeType) => {
         if (this.state.gridActive) return;
-        if (nodeType == NodeType.START_NODE || nodeType == NodeType.FINISH_NODE) {
+        if (nodeType === NodeType.START_NODE || nodeType === NodeType.FINISH_NODE) {
             this.setState({
                 isItemBeingDragged: true,
                 nodeTypeDragged: nodeType,
@@ -523,7 +505,7 @@ class Grid extends React.Component {
 
     onMouseUp = (nodeType) => {
         if (this.state.gridActive) return;
-        if (nodeType == NodeType.START_NODE || nodeType == NodeType.FINISH_NODE) {
+        if (nodeType === NodeType.START_NODE || nodeType === NodeType.FINISH_NODE) {
             this.setState({
                 isItemBeingDragged: false,
                 nodeTypeDragged: nodeType,
@@ -577,8 +559,6 @@ class Grid extends React.Component {
                 case Algorithms.ASTAR:
                     selectedAlgorithm = 'A* Search Algorithm';
                     break;
-                case Algorithms.RANDOM:
-                    selectedAlgorithm = 'Random Search Algorithm';
             }
 
 
@@ -589,7 +569,6 @@ class Grid extends React.Component {
             {value: Algorithms.DFS, label: 'Depth First Search'},
             {value: Algorithms.DIJKSTRA, label: 'Dijkstra\'s Algorithm'},
             {value: Algorithms.ASTAR, label: 'A* Search Algorithm'},
-            {value: Algorithms.RANDOM, label: 'Random Search Algorithm'},
         ];
 
         const customStyles = {
@@ -627,9 +606,6 @@ class Grid extends React.Component {
                 />}
                 <div className={'metrics'}>
                     <div className={'performanceContainer'}>
-                        {this.state.performance > 0 && <p>Algorithm Runtime: {this.state.performance} ms</p>}
-                    </div>
-                    <div className={'performanceContainer'}>
                         {this.state.nodesVisited > 0 && <p>Nodes Explored: {this.state.nodesVisited}</p>}
                     </div>
                 </div>
@@ -662,7 +638,7 @@ class Grid extends React.Component {
             </div>
         );
     }
-};
+}
 
 
 export default Grid;
