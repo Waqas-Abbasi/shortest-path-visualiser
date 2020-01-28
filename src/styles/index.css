@@ -60,7 +60,7 @@ body {
 }
 
 .row {
-  display: table-row;
+  display: table-row !important;
 }
 
 .buttons {
