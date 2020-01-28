@@ -636,7 +636,7 @@ class Grid extends React.Component {
                 <div className={'grid'}>
                     {this.state.grid.map((row, mainIndex) => {
                         return (
-                            <div className={'row'} key={mainIndex}>
+                            <div className={'tablerow'} key={mainIndex}>
                                 {row.map((node, index) => {
                                     const {nodeType} = node;
                                     return <Node
